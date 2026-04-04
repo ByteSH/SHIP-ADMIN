@@ -7,6 +7,7 @@ import com.connect.SHIP_ADMIN.exception.InvalidCredentialsException;
 import com.connect.SHIP_ADMIN.security.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,8 +40,8 @@ public class AuthService {
         return new AuthResponse(token, request.getUsername());
     }
 
-    private void validateCredentials(String username, String password) {
-        if (!adminUsername.equals(username) || !adminPassword.equals(password)) {
+    private void validateCredentials(String username, String rawPassword) {
+        if (!adminUsername.equals(username) || !adminPassword.equals(rawPassword)) {
             throw new InvalidCredentialsException();
         }
     }
